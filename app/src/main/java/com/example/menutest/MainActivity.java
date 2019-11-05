@@ -8,9 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button btnShowContext = (Button) findViewById(R.id.btnShowContextMenu);
         registerForContextMenu(btnShowContext);
+
     }
 
 
@@ -67,4 +69,29 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    //Creating pop up menu
+    public void showPopUpMenu(View view){
+        PopupMenu popup = new PopupMenu(MainActivity.this,view);
+        popup.setOnMenuItemClickListener(MainActivity.this);
+        popup.inflate(R.menu.popup_menu);
+        popup.show();
+
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item){
+        Toast.makeText(MainActivity.this,item.getTitle() + " is selected.",Toast.LENGTH_LONG).show();
+
+        switch (item.getItemId()){
+            case R.id.save :
+                return true;
+            case R.id.delete:
+                return true;
+            case R.id.edit:
+                return true;
+                default:
+                    return false;
+        }
+    }
 }
